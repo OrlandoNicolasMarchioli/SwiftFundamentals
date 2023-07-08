@@ -11,13 +11,15 @@ struct MainView: View {
     @ObservedObject var mainViewModel: MainViewModel
     @ObservedObject var logInViewModel: LogInViewModel
     
+    
+    
     var body: some View {
         VStack {
             switch(mainViewModel.state){
             case .initialMainView:
-                LogInView(errorViewModel: ErrorViewModel(), loginViewModel: LogInViewModel())
+                LogInView(loginViewModel: LogInViewModel())
             case .mainViewHomeScreen:
-                MainView(mainViewModel: MainViewModel(state: .mainViewHomeScreen), logInViewModel: LogInViewModel())
+                ContentView(contentViewData: ContentViewModel(), singleViewData: SingleCoinViewModel())
             }
         }
     }

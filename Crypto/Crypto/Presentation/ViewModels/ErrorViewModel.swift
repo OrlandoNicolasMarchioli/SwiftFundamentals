@@ -20,5 +20,10 @@ class ErrorViewModel: ObservableObject{
         self.alert.toggle()
     }
     
+    func setMessageError(newMessageError: String){
+        self.error = newMessageError
+        toggleError()
+    }
+    
     
 }

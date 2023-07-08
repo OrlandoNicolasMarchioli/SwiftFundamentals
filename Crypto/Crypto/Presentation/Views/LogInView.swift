@@ -12,8 +12,7 @@ import Combine
 struct LogInView: View {
     @State var color = Color.white
     @State var visible = false
-    @ObservedObject var errorViewModel : ErrorViewModel
-    @StateObject var loginViewModel : LogInViewModel
+    @ObservedObject var loginViewModel : LogInViewModel
     @State private var showAlert : Bool = false
     @State private var password : String = ""
     @State private var email: String = ""
@@ -37,16 +36,16 @@ struct LogInView: View {
                             TextField("Your email", text: $email)
                                 .padding()
                                 .background(RoundedRectangle(cornerRadius: 4).stroke(email != "" ? Color("MainColor") : self.color, lineWidth: 2))
-                                
+                            
                             HStack{
                                 VStack{
                                     if self.visible{
-                                           TextField("Your password", text: $password)
-                                        }
-                                        else{
-                                        SecureField("Your password", text: $password)
-                                        }
+                                        TextField("Your password", text: $password)
                                     }
+                                    else{
+                                        SecureField("Your password", text: $password)
+                                    }
+                                }
                                 Button(action: {
                                     self.visible.toggle()
                                 }){
@@ -88,29 +87,28 @@ struct LogInView: View {
                             
                         }
                         
-                            
+                        
                     }
                 }
             }
-        }.onReceive(self.errorViewModel.$alert){alert in
-            print(alert)
-            showAlert = alert
-        }
-        .alert(isPresented: $showAlert) {
+        }.alert(isPresented: $showAlert) {
             Alert(
-                title: Text(errorViewModel.error)
+                title: Text(loginViewModel.error)
             )
+        }
+        .onReceive(self.loginViewModel.$alert){alert in
+            showAlert = alert
         }
     }
 }
 
 struct LogInView_Previews: PreviewProvider {
     static var previews: some View {
-        LogInView(errorViewModel: ErrorViewModel(), loginViewModel: LogInViewModel())
+        LogInView(loginViewModel: LogInViewModel())
     }
 }
-        
-        
+
+
 
 
 
